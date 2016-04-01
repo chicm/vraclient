@@ -12,10 +12,10 @@
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
   <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="styles/timeline.css">
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body>
-
   <table>
   <tr>
     <td colspan="2" class="header">
@@ -24,18 +24,20 @@
   </tr>
   <tr>
     <td class="sidebar">
-      <a href="#/home">Home</a>
-      <a href="#/catalog">Catalog Items</a>
-      <a href="#/vms">My Virtual Machines</a>
+      <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+          <ul>
+            <li> <a href="#/home"><i class="fa fa-dashboard fa-fw"></i>1Home</a> </li>
+            <li><a href="#/items">Catalog Items</a></li>
+            <li><a href="#/vms">My Virtual Machines</a></li>
+          </ul>
+        </div>
+      </div>
     </td>
-
     <td>
       <div ng-view></div>
     </td>
   </tr>
-
-
-  <div>Angular seed app: v<span app-version></span></div>
 
   </table>
   <!-- In production use:

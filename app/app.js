@@ -8,5 +8,18 @@ angular.module('myApp', [
   'myApp.version'
 ]).
 config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/view1'});
+  $routeProvider
+      .when('/home', {
+        templateUrl: "views/home.html",
+        controller: "homeController"
+      })
+      .when('/items', {
+        templateUrl: "views/items.html",
+        controller: "itemController"
+      })
+      .when('/vms', {
+        templateUrl: "views/vms.html",
+        controller: "vmController"
+      })
+      .otherwise({redirectTo: '/home'});
 }]);
