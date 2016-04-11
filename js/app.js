@@ -4,7 +4,7 @@
 // Declare app level module which depends on views, and components
 
 angular.module('myApp', [
-  'ngRoute'
+  'ngRoute', 'LocalStorageModule'
 ]).config(['$routeProvider', function($routeProvider) {
   $routeProvider
       .when('/home', {
@@ -36,10 +36,14 @@ angular.module('myApp', [
 
 })
 
+.controller('TopController', function($scope, localStorageService) {
+	console.log("userInfo:" + localStorageService.get('userInfo'));
+	$scope.username = angular.fromJson(localStorageService.get('userInfo')).username;
+})
 
 .controller('NavController', function($scope, $location) {
     $scope.isActive = function (viewLocation) {
-		console.log($location.path());
+		//console.log($location.path());
 		return (viewLocation === $location.path());
 	};
 });
