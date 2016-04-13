@@ -5,6 +5,7 @@ var app = angular.module('myApp', ['LocalStorageModule']).controller('LoginContr
 		password: '',
 		tenant: ''
 	};
+	$scope.loginErrorMessage = '';
 	$scope.login = function (credentials) {
 		console.log(credentials);
 		
@@ -18,7 +19,7 @@ var app = angular.module('myApp', ['LocalStorageModule']).controller('LoginContr
 			$window.location.href = './index.html';
 			}, function () {
 			//$rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-			console.log("login failed.")
+			$scope.loginErrorMessage = 'Login failed, invalid username or password';
 		});
 		
 	};

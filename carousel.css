@@ -62,8 +62,11 @@ body {
 }
 #signinForm {
 	position:absolute;
+	width: 400px;
+	height: 210px;
   	top:25%;
-	left:10%;
+	left:50%;
+	margin: 0 0 0 -200px;
 }
 
 /* MARKETING CONTENT

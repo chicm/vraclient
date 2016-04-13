@@ -51,8 +51,20 @@ angular.module('myApp', ['ngRoute', 'LocalStorageModule', 'catalogservice'])
 	}, function(res) {
 	});
 })
-.controller('vmController', function() {
-
+.controller('vmController', function($scope, CatalogService, localStorageService) {
+	var token = angular.fromJson(localStorageService.get('userInfo')).token;
+	CatalogService.listVMs(token).then(function(vms) {
+		console.log("vms:" + vms);
+		$scope.vms = vms;
+		$scope.vmDetails = [];
+		vms.forEach(function(vm) {
+			console.log("vm id:" + vm.id);
+			CatalogService.getVMDetails(token, vm.id).then(function(vmDetail){
+				$scope.vmDetails.push(vmDetail);
+			}, function(res){});
+		});
+	}, function(res) {
+	});
 })
 
 .controller('RequestController', function($scope, CatalogService, localStorageService) {

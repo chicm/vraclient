@@ -60,17 +60,23 @@
       </div>
 	  <div class="container" id="signinForm">
       <form class="form-signin" ng-controller="LoginController" ng-submit="login(credentials)" novalidate>
-        <h2 class="form-signin-heading">Please sign in</h2>
+	    
+		<dl class="form">
+		<dd>
         <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" ng-model="credentials.username" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" ng-model="credentials.password" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <input type="email" id="inputEmail" class="form-control form-control-lg input-block" placeholder="Email address" ng-model="credentials.username" required autofocus>
+        </dd>
+		</dl>
+		
+		<dl class="form">
+		<dd>
+		<label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control form-control-lg input-block" placeholder="Password" ng-model="credentials.password" required>
+        <p class="text-danger"><strong>{{loginErrorMessage}}</strong></p>
+		</dd>
+		</dl>
+		
+        <button class="btn btn-lg btn-success btn-block" type="submit">Sign in</button>
       </form>
       </div> <!-- /container -->
 	 <!-- 
