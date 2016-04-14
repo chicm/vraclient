@@ -130,3 +130,24 @@ img
 	padding: 15px;
 	background-color:#ffffff;
 }
+.portlet-title>.caption {
+padding: 12px;
+}
+
+.label.label-sm {
+    font-size: 13px;
+    padding: 5px 5px;
+    border-radius: 0;
+}
+.label-success {
+    background-color: #36c6d3;
+}
+.label-info {
+    background-color: #659be0;
+}
+.label-warning {
+    background-color: #F1C40F;
+}
+.label-danger {
+    background-color: #ed6b75;
+}
