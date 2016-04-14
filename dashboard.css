@@ -112,3 +112,21 @@ img
    display: block;
    margin: auto;
 }
+
+.portlet.box.green {
+    border: 1px solid #5cd1db;
+    border-top: 0;
+}
+.portlet.box.green>.portlet-title, .portlet.green, .portlet>.portlet-body.green {
+    background-color: #32c5d2;
+}
+.portlet.box>.portlet-title {
+    border-bottom: 0;
+    padding: 0 10px;
+    margin-bottom: 0;
+    color: #fff;
+}
+.portlet>.portlet-body{
+	padding: 15px;
+	background-color:#ffffff;
+}
