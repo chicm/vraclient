@@ -26,14 +26,38 @@ body {
 .form-signin .form-control:focus {
   z-index: 2;
 }
-/*
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+#signinForm {
+	position:absolute;
+	width: 400px;
+	height: 210px;
+  	top:25%;
+	left:50%;
+	margin: 0 0 0 -200px;
 }
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}*/
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+  height: 700px;
+  margin-bottom: 60px;
+  z-index: 1;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  height: 700px;
+  background-color: #777;
+}
+.carousel-inner > .item > img {
+  position: absolute;
+  top: 100;
+  left: 0;
+  min-width: 100%;
+  height: 700px;
+}

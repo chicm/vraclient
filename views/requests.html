@@ -13,19 +13,19 @@
                 <tr>
                   <th style="width:6%">Request Number</th>
                   <th style="width:20%">Item</th>
-                  <th style="width:30%">Description</th>
-				  <th style="width:10%">Status</th>
+                  <th style="width:27%">Description</th>
+				  <th style="width:13%">Status</th>
 				  <th style="width:10%">Submitter</th>
 				  <th style="width:12%">Submitted</th>
 				  <th style="width:12%">Last Updated</th>
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="request in requests" ng-class="{'info': $even, 'success': $odd}">
+                <tr ng-repeat="request in requests">
                   <td>{{request.requestNumber}}</td>
 				  <td style="white-space:nowrap;">{{request.requestedItemName}}</td>
 				  <td style="word-wrap: break-word;">{{request.requestedItemDescription}}</td>
-				  <td>{{request.stateName}}</td>
+				  <td><span  class = "label label-sm" ng-class="'{{request.state}}'==='SUCCESSFUL' ? 'label-success' : 'label-danger'">{{request.state}}</span></td>
 				  <td>{{request.requestedBy}}</td>
 				  <td>{{request.dateSubmitted}}</td>
 				  <td>{{request.lastUpdated}}</td>
