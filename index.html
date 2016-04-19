@@ -59,11 +59,11 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-			<li><a href="#home">{{username}}</a></li>
-            <li><a href="#home">Dashboard</a></li>
-            <li><a href="#items">Settings</a></li>
-            <li><a href="#vms">Profile</a></li>
-            <li><a href="#items2">Help</a></li>
+			<li><a ui-sref="home">{{username}}</a></li>
+            <li><a ui-sref="home">Dashboard</a></li>
+            <li><a ui-sref="items">Settings</a></li>
+            <li><a ui-sref="vms">Profile</a></li>
+            <li><a ui-sref="vms">Help</a></li>
           </ul>
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Search...">
@@ -76,13 +76,13 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar" ng-controller="NavController">
           <ul class="nav nav-sidebar">
-            <li ng-class="{ active: isActive('/home')}"><a href="#home">Dashboard <span class="sr-only">(current)</span></a></li>
-            <li ng-class="{ active: isActive('/items')}"><a href="#items">Catalog Items</a></li>
-            <li ng-class="{ active: isActive('/requests')}"><a href="#requests">Requests</a></li>
-			<li ng-class="{ active: isActive('/vms')}"><a href="#vms">My Virtual Machines</a></li>
+            <li ng-class="{ active: isActive('/home')}"><a ui-sref="home">Dashboard <span class="sr-only">(current)</span></a></li>
+            <li ng-class="{ active: isActive('/items')}"><a ui-sref="items">Catalog Items</a></li>
+            <li ng-class="{ active: isActive('/requests')}"><a ui-sref="requests">Requests</a></li>
+			<li ng-class="{ active: isActive('/vms')}"><a ui-sref="vms">My Virtual Machines</a></li>
           </ul>
         </div>
-		<div ng-view></div>
+		<div ui-view></div>
       </div>
     </div>
 
@@ -110,10 +110,11 @@
     <!--
 	<script src="../../assets/js/vendor/holder.min.js"></script> -->
 	<script src="lib/angular.min.js"></script>
-	<script src="lib/angular-route.min.js"></script>
+	<script src="lib/angular-ui-router.js"></script>
 	<script src="lib/jquery.min.js"></script>
 	<script src="lib/bootstrap.min.js"></script>
 	<script src="lib/angular-local-storage.min.js"></script>
+	<script src="lib/ui-bootstrap-tpls-1.3.2.min.js"></script>
 	<script src="js/catalog-service.js"></script>
 	<script src="js/app.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

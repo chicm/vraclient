@@ -1,0 +1,46 @@
+<!--<div class="modal-header">
+            <h3 class="modal-title">I'm a modal!</h3>
+        </div>
+        <div class="modal-body">
+            <ul>
+                <li ng-repeat="item in items">
+                    <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
+                </li>
+            </ul>
+            Selected: <b>{{ selected.item }}</b>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()" >OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+	-->
+<!--	<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content"> -->
+        <div class="modal-header" style="padding:35px 50px;">
+          <h4><span class="glyphicon glyphicon-lock"></span>New Request: {{item.catalogItem.name}}</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+         <form role="form">
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+              <input type="text" class="form-control" id="usrname" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+              <input type="text" class="form-control" id="psw" placeholder="Enter password">
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" value="" checked>Remember me</label>
+            </div>
+              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+			<button type="button" class="btn btn-success btn-default pull-left" ng-click="ok()"><span class="glyphicon glyphicon-ok"></span> Submit</button>
+			<button type="button" class="btn btn-danger btn-default pull-right" ng-click="canel()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+        </div>
+<!--      </div>
+      
+    </div>
+  </div> -->
