@@ -155,7 +155,7 @@ padding: 12px;
 .modal-header, h4, .close {
     background-color: #5cb85c;
     color:white !important;
-    text-align: center;
+/*    text-align: center;*/
     font-size: 30px;
 }
 .modal-footer {

@@ -75,16 +75,25 @@ angular.module('myApp', ['ui.router', 'ui.bootstrap', 'LocalStorageModule', 'cat
 	}, function(res) {
 	});
 })
-.controller('RequestItemController', function($scope, $uibModalInstance, catalogItem) {
+.controller('RequestItemController', function($scope, $uibModalInstance, catalogItem, CatalogService, localStorageService) {
+	var token = angular.fromJson(localStorageService.get('userInfo')).token;
 	//$scope.openModal = function() {
 		console.log("opening modal: " + catalogItem);
 		$scope.item = catalogItem;
+		$scope.deployments = 1;
 		$scope.ok = function() {
+			console.log("modal.OK");
+			console.log("$scope.item:" + angular.toJson($scope.item));
+			console.log("$scope.des:" + $scope.description);
+			console.log("$scope.reason:" + $scope.reason);
+			console.log("$scope.deployments:" + $scope.deployments);
+			CatalogService.requestItem(token, $scope.item.catalogItem.id);
 			$uibModalInstance.close($scope.item);
-		}
+		};
 		$scope.cancel = function() {
-			$uibModalInstance.dismiss();
-		}
+			console.log("modal.cancel");
+			$uibModalInstance.dismiss("cancel");
+		};
 		//$modal.open({templateUrl:'views/requestItemModal.html'});
 	//};
 })

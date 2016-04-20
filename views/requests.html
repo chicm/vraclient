@@ -25,7 +25,7 @@
                   <td>{{request.requestNumber}}</td>
 				  <td style="white-space:nowrap;">{{request.requestedItemName}}</td>
 				  <td style="word-wrap: break-word;">{{request.requestedItemDescription}}</td>
-				  <td><span  class = "label label-sm" ng-class="'{{request.state}}'==='SUCCESSFUL' ? 'label-success' : 'label-danger'">{{request.state}}</span></td>
+				  <td><span  class = "label label-sm" ng-class="{'label-success': '{{request.state}}'==='SUCCESSFUL', 'label-danger': '{{request.state}}'.indexOf('FAILED') > -1,  'label-info': '{{request.state}}'.indexOf('FAILED') < 0 && '{{request.state}}'.indexOf('SUCCESSFUL') < 0 }">{{request.state}}</span></td>
 				  <td>{{request.requestedBy}}</td>
 				  <td>{{request.dateSubmitted}}</td>
 				  <td>{{request.lastUpdated}}</td>
