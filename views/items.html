@@ -18,7 +18,7 @@
 								
     <div class="col-lg-3 col-md-6" ng-repeat="item in items">
 			<div class="panel panel-primary">
-				<div class="panel-heading">
+				<div class="panel-heading" tooltip-placement="right" uib-tooltip="{{item.jsonstr}}">
 					<div class="row">
 						<div class="col-xs-3">
 							<i class="fa fa-desktop fa-5x"></i>
