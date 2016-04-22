@@ -119,6 +119,14 @@ img
 }
 .portlet.box.green>.portlet-title, .portlet.green, .portlet>.portlet-body.green {
     background-color: #32c5d2;
+	/*background-color: #36c6d3;*/
+	/*background-color: #5cb85c;*/
+}
+.portlet-title.green {
+	background-color: #32c5d2;
+	/*background-color: #36c6d3;*/
+	/*background-color: #5cb85c;*/
+	color: #fff;
 }
 .portlet.box>.portlet-title {
     border-bottom: 0;

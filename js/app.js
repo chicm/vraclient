@@ -5,13 +5,8 @@
 
 angular.module('myApp', ['ui.router', 'ui.bootstrap', 'LocalStorageModule', 'catalogservice'])
 .config(function($stateProvider, $urlRouterProvider) {
-	$urlRouterProvider.otherwise('/home');
+	$urlRouterProvider.otherwise('/items');
 	$stateProvider
-		.state('home', {
-			url:'/home',
-			templateUrl: "views/dashboard.html",
-			controller: "homeController"
-		})
 		.state('items', {
 			url:'/items',
 			templateUrl: "views/items.html",
@@ -29,10 +24,6 @@ angular.module('myApp', ['ui.router', 'ui.bootstrap', 'LocalStorageModule', 'cat
 		});
      // .otherwise({redirectTo: '/vms'});
 })
-
-.controller('homeController', function() {
-
-})
 .controller('itemController', function($scope, $uibModal, CatalogService, localStorageService) {
 	var token = angular.fromJson(localStorageService.get('userInfo')).token;
 	console.log('itemController:' + token);
@@ -49,6 +40,7 @@ angular.module('myApp', ['ui.router', 'ui.bootstrap', 'LocalStorageModule', 'cat
 			description: 'RedHat 6.4 blueprint'
 		}
 	}];*/
+	$scope.request_submitted = { alert: false };
 	
 	$scope.open=function(item) {
 		var modalInstance = $uibModal.open({
@@ -63,7 +55,7 @@ angular.module('myApp', ['ui.router', 'ui.bootstrap', 'LocalStorageModule', 'cat
 			}
 		});
 		modalInstance.result.then(function (catalogItem) {
-		  //$scope.selected = selectedItem;
+		  $scope.request_submitted.alert = true;
 		}, function () {
 		  console.log('Modal dismissed at: ' + new Date());
 		});

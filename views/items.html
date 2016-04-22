@@ -1,7 +1,22 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <h1 class="page-header">Catalog Items</h1>
+    <!--
+	<div class="alert alert-success" role="alert">
+		<h2>Catalog Items</h1>
+	</div>
+	<div class="page-header"></div> -->
+	
+	                            <div class="portlet-title green">
+                                    <div class="caption huge">
+                                        Catalog Items</div>
+                                </div>
+								<br><br>
 
-	<div class="col-lg-3 col-md-6" ng-repeat="item in items">
+<div class="alert alert-success" role="alert" ng-show="request_submitted.alert">
+  <button type="button" class="close" aria-label="Close" ng-click="request_submitted.alert = false"><span aria-hidden="true">&times;</span></button>
+  Catalog item request has been submitted successfully!
+</div>
+								
+    <div class="col-lg-3 col-md-6" ng-repeat="item in items">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<div class="row">
