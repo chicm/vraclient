@@ -12,7 +12,7 @@
               <span class="text-muted">Something else</span>
         </div>-->
 		
-	<div class="col-lg-3 col-md-6" ng-repeat="vm in vms">
+	<div class="col-lg-3 col-md-6" ng-repeat="vm in vmDetails">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<div>
@@ -20,19 +20,22 @@
 							<img src="images/vm.png" width="200" height="160" alt="{{vm.name}}">
 						</div>
 						<div class="center-block">
-							<p class="huge text-center">{{vm.name}}</p>
+							<p class="huge text-center">{{vm.name}} ({{vm.machineStatus}})</p>
 						</div>
 					</div>
 				</div>
 				<div class="panel-footer">
 				
 				
-				<a class="btn btn-success" href="#" data-toggle="tooltip" data-placement="bottom" title="Start">
+				<a class="btn btn-success" data-toggle="tooltip" ng-click="powerOn(vm)" data-placement="bottom" title="Power on">
 				<i class="fa fa-play fa-lg" aria-hidden="true"></i> </a>
-				<a class="btn btn-danger" href="#" data-toggle="tooltip" data-placement="bottom" title="Stop">
+				<a class="btn btn-danger" data-toggle="tooltip" ng-click="powerOff(vm)" data-placement="bottom" title="Power off">
 				<i class="fa fa-stop fa-lg" aria-hidden="true"></i> </a>
-				<a class="btn btn-danger" href="#" data-toggle="tooltip" data-placement="bottom" title="Delete">
+				<a class="btn btn-info"  data-toggle="tooltip" ng-click="openConsole(vm)" data-placement="bottom" title="Open console">
+				<i class="fa fa-arrows-alt fa-lg" aria-hidden="true"></i> </a>
+				<a class="btn btn-danger" data-toggle="tooltip" ng-click="destroy(vm)" data-placement="bottom" title="Destroy">
 				<i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> </a>
+				
 				    
 				
 				<!--

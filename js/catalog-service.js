@@ -5,7 +5,9 @@ angular.module('catalogservice', [])
 	"LIST_RESOURCES": "/catalog-service/api/consumer/resources/?page=1&limit=100",
 	"LIST_VMS": "/catalog-service/api/consumer/resourceTypes/Infrastructure.Virtual",
 	"LIST_REQUESTS": "/catalog-service/api/consumer/requests",
-	"GET_VM_DETAILS": "/catalog-service/api/consumer/resources/"
+	"GET_VM_DETAILS": "/catalog-service/api/consumer/resources/",
+	"VM_ACTIONS": "/catalog-service/api/consumer/resources/",
+	"RESOURCE_VIEWS": "/catalog-service/api/consumer/resourceViews/"
 })
 .factory('CatalogService', function($http, CATALOG_SERVICE) {
 	console.log("register catalog service");
@@ -68,10 +70,94 @@ angular.module('catalogservice', [])
 			}
 		};
 		return $http(req).then(function(res) {
+			console.log("vm: " + res.data.name);
 			console.log(res);
 			return res.data;
 		});
 	}
+	
+	catalogService.powerOff = function(token, vmDetail) {
+		var actionId = null;
+		vmDetail.operations.forEach(function(op) {
+			if(op.type === "ACTION" && op.bindingId.indexOf("PowerOff") > -1) {
+				actionId = op.id;
+			}
+		});
+		var req1 = {
+			method: 'GET',
+			url: CATALOG_SERVICE.VM_ACTIONS + vmDetail.id + "/actions/" + actionId + "/requests/template",
+			headers: {
+			   'Authorization': 'Bearer ' + token
+			}
+		}
+		$http(req1).then(function(res){
+			console.log(res);
+			var req2 = {
+				method: 'POST',
+				url: CATALOG_SERVICE.VM_ACTIONS + vmDetail.id + "/actions/" + actionId + "/requests",
+				headers: {
+					'Authorization': 'Bearer ' + token
+				},
+				data: res.data
+			};
+			$http(req2).then(function(res){
+				console.log("powerOff success!")
+				console.log(res);
+			});
+		});
+	}
+	
+	catalogService.openConsole = function(token, vmDetail) {
+		
+		var actionId = null;
+		vmDetail.operations.forEach(function(op) {
+			if(op.type === "EXTENSION" && op.extensionId.indexOf("ConnectViaVmrc") >= 0) {
+				actionId = op.id;
+			}
+		});
+		var req1 = {
+			method: 'GET',
+			url: CATALOG_SERVICE.RESOURCE_VIEWS + vmDetail.id,
+			headers: {
+			   'Authorization': 'Bearer ' + token
+			}
+		}
+		
+		var reqOp = {
+			method: 'GET',
+			//url: "/catalog-service/api/resourceOperations",
+			url: "/catalog-service/api/plugins",
+			headers: {
+			   'Authorization': 'Bearer ' + token
+			}
+		}
+		
+		$http(reqOp).then(function(res) {
+			console.log(res);
+		});
+		
+		/*
+		$http(req1).then(function(res){
+			console.log(res);
+			res.data.links.forEach(function(link) {
+				if(link.rel.indexOf("ConnectViaVmrc") >= 0 && link.rel.indexOf("GET Template") >= 0) {
+					console.log("hatos: " + link.href);
+					console.log("action link:" + CATALOG_SERVICE.VM_ACTIONS + vmDetail.id + "/actions/" + actionId + "/requests");
+					var req2 = {
+						method: 'GET',
+						url: link.href,
+						headers: {
+							'Authorization': 'Bearer ' + token
+						}
+					};
+					$http(req2).then(function(res){
+						console.log(res);
+					});
+				}
+			});
+		});*/
+	}
+
 	
 	catalogService.requestItem = function(token, catalogItemId, description, reason, deployments) {
 		var req = {

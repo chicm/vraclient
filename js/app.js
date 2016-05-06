@@ -95,18 +95,36 @@ angular.module('myApp', ['ui.router', 'ui.bootstrap', 'LocalStorageModule', 'cat
 })
 .controller('vmController', function($scope, CatalogService, localStorageService) {
 	var token = angular.fromJson(localStorageService.get('userInfo')).token;
+	
+	$scope.powerOff = function(vmDetail) {
+		console.log("powerOff: " + vmDetail.id + " :" + vmDetail.name);
+		CatalogService.powerOff(token, vmDetail);
+	};
+	
+	$scope.openConsole = function(vmDetail) {
+		console.log("open console: " + vmDetail.id + " :" + vmDetail.name);
+		CatalogService.openConsole(token, vmDetail);
+	};
+	
 	CatalogService.listVMs(token).then(function(vms) {
 		console.log("vms:" + vms);
-		$scope.vms = vms;
 		$scope.vmDetails = [];
 		vms.forEach(function(vm) {
 			console.log("vm id:" + vm.id);
 			CatalogService.getVMDetails(token, vm.id).then(function(vmDetail){
+				for(var entry of vmDetail.resourceData.entries) {
+					if(entry.key === "MachineStatus") {
+						vmDetail.machineStatus = entry.value.value;
+						break;
+					}
+				}
 				$scope.vmDetails.push(vmDetail);
+				//console.log("vm Details:" + angular.toJson(vmDetail));
 			}, function(res){});
 		});
 	}, function(res) {
 	});
+	
 })
 
 .controller('RequestController', function($scope, CatalogService, localStorageService) {
