@@ -47,9 +47,10 @@ angular.module('myApp', ['ui.router', 'ui.bootstrap', 'LocalStorageModule', 'cat
 		  console.log('Modal dismissed at: ' + new Date());
 		});
 	};
-	$scope.items = [];
-	var items = CatalogService.listCatalogItems(token).then(function(content) {
-		console.log("items:" + angular.toJson(content, true));
+	
+	CatalogService.listCatalogItems(token).then(function(content) {
+		$scope.items = [];
+		//console.log("items:" + angular.toJson(content, true));
 		$scope.items = content.map(function(elem) {
 			var newElem = elem;
 			newElem.jsonstr = angular.toJson(elem.catalogItem, true);
