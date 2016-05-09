@@ -1,32 +1,23 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <div class="portlet-title green">
-                                    <div class="caption huge">
-                                        Virtual Machines</div>
-                                </div>
-								<br><br>
+	<div class="portlet-title green">
+		<div class="caption huge"> Virtual Machines</div>
+	</div>
+	<br><br>
 
-   <!-- <div class="row placeholders"> 
-        <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="images/vm.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-        </div>-->
-		
 	<div class="col-lg-3 col-md-6" ng-repeat="vm in vmDetails">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<div>
-						<div class="center-block">
-							<img ng-src="{{vm.image}}" width="200" height="160" alt="{{vm.name}}">
-						</div>
-						<div class="center-block">
-							<p class="huge text-center">{{vm.name}} ({{vm.machineStatus}})</p>
-						</div>
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<div>
+					<div class="center-block">
+						<img ng-src="{{vm.image}}" width="200" height="160" alt="{{vm.name}}">
+					</div>
+					<div class="center-block">
+						<p class="huge text-center">{{vm.name}} ({{vm.machineStatus}})</p>
 					</div>
 				</div>
-				<div class="panel-footer">
-				
-				
+			</div>
+
+			<div class="panel-footer">
 				<a class="btn btn-success" data-toggle="tooltip" ng-click="powerOn(vm)" data-placement="bottom" title="Power on">
 				<i class="fa fa-play fa-lg" aria-hidden="true"></i> </a>
 				<a class="btn btn-danger" data-toggle="tooltip" ng-click="powerOff(vm)" data-placement="bottom" title="Power off">
@@ -35,18 +26,7 @@
 				<i class="fa fa-arrows-alt fa-lg" aria-hidden="true"></i> </a>
 				<a class="btn btn-danger" data-toggle="tooltip" ng-click="destroy(vm)" data-placement="bottom" title="Destroy">
 				<i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> </a>
-				
-				    
-				
-				<!--
-						<span class="pull-left">Request</span>
-						<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-						<div class="clearfix"></div> -->
-				</div>
 			</div>
+		</div>
 	</div>
-
-
-<!--	</div>-->
-
 </div>

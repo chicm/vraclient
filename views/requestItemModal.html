@@ -1,29 +1,31 @@
-        <div class="modal-header" style="padding:25px 40px;">
-          <h4><i class="fa fa-edit"></i>New Request: {{item.catalogItem.name}}</h4>
-        </div>
-        <div class="modal-body" style="padding:40px 50px;">
-         <form role="form">
-            <div class="form-group">
-              <label for="description">Description:</label>
-              <textarea class="form-control" rows="5" id="description" ng-model="description"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="reason">Reason:</label>
-              <textarea class="form-control" rows="4" id="reason" ng-model="reason"></textarea>
-            </div>
-            <div class="form-group">
-			  <label for="deployments">Deployments:</label>
-              <input type="text" class="form-control" id="deployments" ng-model="deployments">
-			</div>
-          </form>
-        </div>
-        <div class="modal-footer">
-			<div class="row">
-			<div class="col-lg-6">
+<div class="modal-header" style="padding:25px 40px;">
+	<h4><i class="fa fa-edit"></i>New Request: {{item.catalogItem.name}}</h4>
+</div>
+
+<div class="modal-body" style="padding:40px 50px;">
+	<form role="form">
+		<div class="form-group">
+			<label for="description">Description:</label>
+			<textarea class="form-control" rows="5" id="description" ng-model="description"></textarea>
+		</div>
+		<div class="form-group">
+			<label for="reason">Reason:</label>
+			<textarea class="form-control" rows="4" id="reason" ng-model="reason"></textarea>
+		</div>
+		<div class="form-group">
+			<label for="deployments">Deployments:</label>
+			<input type="text" class="form-control" id="deployments" ng-model="deployments">
+		</div>
+	</form>
+</div>
+			
+<div class="modal-footer">
+	<div class="row">
+		<div class="col-lg-6">
 			<button type="button" class="btn btn-success center-block" ng-click="ok()"><span class="glyphicon glyphicon-ok"></span> Submit</button>
-			</div>
-			<div class="col-lg-6">
+		</div>
+		<div class="col-lg-6">
 			<button type="button" class="btn btn-danger center-block" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-			</div>
-			</div>
-        </div>
+		</div>
+	</div>
+</div>

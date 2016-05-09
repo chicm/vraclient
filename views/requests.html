@@ -1,38 +1,35 @@
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-		
-		<div class="portlet box green">
-                                <div class="portlet-title">
-                                    <div class="caption huge">
-                                        Requests </div>
-                                </div>
-                                <div class="portlet-body">
-
-          <div class="table-responsive">
-            <table class="table table-striped table-bordered table-hover" style="table-layout:fixed;">
-              <thead>
-                <tr>
-                  <th style="width:6%">Request Number</th>
-                  <th style="width:20%">Item</th>
-                  <th style="width:27%">Description</th>
-				  <th style="width:13%">Status</th>
-				  <th style="width:10%">Submitter</th>
-				  <th style="width:12%">Submitted</th>
-				  <th style="width:12%">Last Updated</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="request in requests">
-                  <td>{{request.requestNumber}}</td>
-				  <td style="white-space:nowrap;">{{request.requestedItemName}}</td>
-				  <td style="word-wrap: break-word;">{{request.requestedItemDescription}}</td>
-				  <td><span  class = "label label-sm" ng-class="{'label-success': '{{request.state}}'==='SUCCESSFUL', 'label-danger': '{{request.state}}'.indexOf('FAILED') > -1,  'label-info': '{{request.state}}'.indexOf('FAILED') < 0 && '{{request.state}}'.indexOf('SUCCESSFUL') < 0 }">{{request.state}}</span></td>
-				  <td>{{request.requestedBy}}</td>
-				  <td>{{request.dateSubmitted}}</td>
-				  <td>{{request.lastUpdated}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-		  </div>
-        </div>
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	<div class="portlet box green">
+		<div class="portlet-title">
+			<div class="caption huge"> Requests </div>
 		</div>
+		<div class="portlet-body">
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered table-hover" style="table-layout:fixed;">
+					<thead>
+						<tr>
+							<th style="width:6%">Request Number</th>
+							<th style="width:20%">Item</th>
+							<th style="width:27%">Description</th>
+							<th style="width:13%">Status</th>
+							<th style="width:10%">Submitter</th>
+							<th style="width:12%">Submitted</th>
+							<th style="width:12%">Last Updated</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="request in requests">
+							<td>{{request.requestNumber}}</td>
+							<td style="white-space:nowrap;">{{request.requestedItemName}}</td>
+							<td style="word-wrap: break-word;">{{request.requestedItemDescription}}</td>
+							<td><span  class = "label label-sm" ng-class="{'label-success': '{{request.state}}'==='SUCCESSFUL', 'label-danger': '{{request.state}}'.indexOf('FAILED') > -1,  'label-info': '{{request.state}}'.indexOf('FAILED') < 0 && '{{request.state}}'.indexOf('SUCCESSFUL') < 0 }">{{request.state}}</span></td>
+							<td>{{request.requestedBy}}</td>
+							<td>{{request.dateSubmitted}}</td>
+							<td>{{request.lastUpdated}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
