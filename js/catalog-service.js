@@ -1,4 +1,9 @@
-angular.module('catalogservice', [])
+angular.module('catalogservice', ['LocalStorageModule'])
+.run(function($http, localStorageService) {
+	var token = angular.fromJson(localStorageService.get('userInfo')).token;
+	console.log('Token:' + token);
+	$http.defaults.headers.common.Authorization = 'Bearer ' + token;
+})
 .constant("CATALOG_SERVICE", {
 	"LIST_CATALOG_ITEMS": "/catalog-service/api/consumer/entitledCatalogItems",
 	"LIST_CATALOG_ITEM_VIEWS": "/catalog-service/api/consumer/entitledCatalogItemViews/",
@@ -13,43 +18,28 @@ angular.module('catalogservice', [])
 	console.log("register catalog service");
 	console.log("constant:" + CATALOG_SERVICE.LIST_CATALOG_ITEMS);
 	var catalogService = {};
-	catalogService.listCatalogItems = function(token) {
-		var req = {
-			method: 'GET',
-			url: CATALOG_SERVICE.LIST_CATALOG_ITEMS,
-			headers: {
-			   'Authorization': 'Bearer ' + token
-			}
-		};
-		return $http(req).then(function(res) {
+	catalogService.listCatalogItems = function() {
+		var url = CATALOG_SERVICE.LIST_CATALOG_ITEMS;
+		
+		return $http.get(url).then(function(res) {
 			console.log(res);
 			return res.data.content;
 		});
 	}
 	
-	catalogService.listRequests = function(token) {
-		var req = {
-			method: 'GET',
-			url: CATALOG_SERVICE.LIST_REQUESTS,
-			headers: {
-			   'Authorization': 'Bearer ' + token
-			}
-		};
-		return $http(req).then(function(res) {
+	catalogService.listRequests = function() {
+		var	url = CATALOG_SERVICE.LIST_REQUESTS;
+		
+		return $http.get(url).then(function(res) {
 			console.log(res);
 			return res.data.content;
 		});
 	}
 	
-	catalogService.listVMs = function(token) {
-		var req = {
-			method: 'GET',
-			url: CATALOG_SERVICE.LIST_RESOURCES,
-			headers: {
-			   'Authorization': 'Bearer ' + token
-			}
-		};
-		return $http(req).then(function(res) {
+	catalogService.listVMs = function() {
+		var url = CATALOG_SERVICE.LIST_RESOURCES;
+		
+		return $http.get(url).then(function(res) {
 			console.log(res);
 			var resources = res.data.content;
 			var vms = resources.filter(function(resource) {
@@ -60,35 +50,25 @@ angular.module('catalogservice', [])
 		});
 	}
 	
-	catalogService.getVMDetails = function(token, resourceId) {
-		var req = {
-			method: 'GET',
-			url: CATALOG_SERVICE.GET_VM_DETAILS + resourceId,
-			headers: {
-			   'Authorization': 'Bearer ' + token
-			}
-		};
-		return $http(req).then(function(res) {
+	catalogService.getVMDetails = function(resourceId) {
+		var url = CATALOG_SERVICE.GET_VM_DETAILS + resourceId;
+		
+		return $http.get(url).then(function(res) {
 			console.log("vm: " + res.data.name);
 			console.log(res);
 			return res.data;
 		});
 	}
 	
-	catalogService.getIconImage = function(token, iconId) {
-		var reqIcon = {
-			method: 'GET',
-			url: "/catalog-service/api/icons/" + iconId,
-			headers: {
-			   'Authorization': 'Bearer ' + token
-			}
-		}
-		return $http(reqIcon).then(function(res) {
+	catalogService.getIconImage = function(iconId) {
+		var url = "/catalog-service/api/icons/" + iconId;
+		
+		return $http.get(url).then(function(res) {
 			return "data:image/png;base64," + res.data.image;
 		});
 	}
 	
-	catalogService.powerOff = function(token, vmDetail) {
+	catalogService.powerOff = function(vmDetail) {
 		var actionId = null;
 		vmDetail.operations.forEach(function(op) {
 			if(op.type === "ACTION" && op.bindingId.indexOf("PowerOff") > -1) {
@@ -119,7 +99,7 @@ angular.module('catalogservice', [])
 		});
 	}
 	
-	catalogService.openConsole = function(token, vmDetail) {
+	catalogService.openConsole = function(vmDetail) {
 		
 		var actionId = null;
 		vmDetail.operations.forEach(function(op) {
@@ -172,16 +152,10 @@ angular.module('catalogservice', [])
 	}
 
 	
-	catalogService.requestItem = function(token, catalogItemId, description, reason, deployments) {
-		var req = {
-			method: 'GET',
-			url: CATALOG_SERVICE.LIST_CATALOG_ITEM_VIEWS + catalogItemId,
-			headers: {
-			   'Authorization': 'Bearer ' + token
-			}
-		};
+	catalogService.requestItem = function(catalogItemId, description, reason, deployments) {
+		var	url = CATALOG_SERVICE.LIST_CATALOG_ITEM_VIEWS + catalogItemId;
 		console.log("requestItem:" + catalogItemId);
-		$http(req).then(function(res) {
+		$http.get(url).then(function(res) {
 			console.log(res);
 			var templateLink = res.data.links[0];
 			var requestLink = res.data.links[1];
@@ -190,29 +164,17 @@ angular.module('catalogservice', [])
 				requestLink = res.data.links[0];
 			}
 			console.log("templateLink:" + templateLink.href);
-			var templateReq = {
-				method: 'GET',
-				url: templateLink.href,
-				headers: {
-					'Authorization': 'Bearer ' + token
-				}
-			};
-			$http(templateReq).then(function(res){
+			var	templateUrl = templateLink.href;
+			$http.get(templateUrl).then(function(res){
 				console.log("template response: ");
 				console.log(res);
 				var reqData = res.data;
 				reqData.description = description;
 				reqData.reasons = reason;
 				reqData.data._number_of_instances = deployments;
-				var requestItemReq = {
-					method: 'POST',
-					url: requestLink.href,
-					headers: {
-						'Authorization': 'Bearer ' + token
-					},
-					data: reqData
-				}
-				$http(requestItemReq).then(function(res){
+				
+				var requestItemUrl = requestLink.href;
+				$http.post(requestItemUrl).then(function(res){
 					console.log("request response:");
 					console.log(res);
 				});
