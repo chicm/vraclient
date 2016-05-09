@@ -53,7 +53,6 @@ angular.module('catalogservice', [])
 			console.log(res);
 			var resources = res.data.content;
 			var vms = resources.filter(function(resource) {
-				//console.log("type:" + resource.resourceTypeRef.id);
 				return resource.resourceTypeRef.id === "Infrastructure.Virtual";
 			});
 			console.log("vms: " + vms);
@@ -73,6 +72,19 @@ angular.module('catalogservice', [])
 			console.log("vm: " + res.data.name);
 			console.log(res);
 			return res.data;
+		});
+	}
+	
+	catalogService.getIconImage = function(token, iconId) {
+		var reqIcon = {
+			method: 'GET',
+			url: "/catalog-service/api/icons/" + iconId,
+			headers: {
+			   'Authorization': 'Bearer ' + token
+			}
+		}
+		return $http(reqIcon).then(function(res) {
+			return "data:image/png;base64," + res.data.image;
 		});
 	}
 	
@@ -126,7 +138,8 @@ angular.module('catalogservice', [])
 		var reqOp = {
 			method: 'GET',
 			//url: "/catalog-service/api/resourceOperations",
-			url: "/catalog-service/api/plugins",
+			//url: "/catalog-service/api/plugins",
+			url: "/catalog-service/api/icons/" + vmDetail.iconId,
 			headers: {
 			   'Authorization': 'Bearer ' + token
 			}
