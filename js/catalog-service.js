@@ -7,9 +7,9 @@ angular.module('catalogservice', ['LocalStorageModule'])
 .constant("CATALOG_SERVICE", {
 	"LIST_CATALOG_ITEMS": "/catalog-service/api/consumer/entitledCatalogItems",
 	"LIST_CATALOG_ITEM_VIEWS": "/catalog-service/api/consumer/entitledCatalogItemViews/",
-	"LIST_RESOURCES": "/catalog-service/api/consumer/resources/?page=1&limit=100",
+	"LIST_RESOURCES": "/catalog-service/api/consumer/resources/?page=1&limit=500",
 	"LIST_VMS": "/catalog-service/api/consumer/resourceTypes/Infrastructure.Virtual",
-	"LIST_REQUESTS": "/catalog-service/api/consumer/requests",
+	"LIST_REQUESTS": "/catalog-service/api/consumer/requests/?page=1&limit=500",
 	"GET_VM_DETAILS": "/catalog-service/api/consumer/resources/",
 	"VM_ACTIONS": "/catalog-service/api/consumer/resources/",
 	"RESOURCE_VIEWS": "/catalog-service/api/consumer/resourceViews/"
@@ -39,7 +39,7 @@ angular.module('catalogservice', ['LocalStorageModule'])
 	catalogService.listVMs = function() {
 		var url = CATALOG_SERVICE.LIST_RESOURCES;
 		
-		return $http.get(url).then(function(res) {
+		return $http.get(url, {cache: true}).then(function(res) {
 			console.log(res);
 			var resources = res.data.content;
 			var vms = resources.filter(function(resource) {
@@ -53,7 +53,7 @@ angular.module('catalogservice', ['LocalStorageModule'])
 	catalogService.getVMDetails = function(resourceId) {
 		var url = CATALOG_SERVICE.GET_VM_DETAILS + resourceId;
 		
-		return $http.get(url).then(function(res) {
+		return $http.get(url, {cache: true}).then(function(res) {
 			console.log("vm: " + res.data.name);
 			console.log(res);
 			return res.data;
@@ -63,7 +63,7 @@ angular.module('catalogservice', ['LocalStorageModule'])
 	catalogService.getIconImage = function(iconId) {
 		var url = "/catalog-service/api/icons/" + iconId;
 		
-		return $http.get(url).then(function(res) {
+		return $http.get(url, {cache: true}).then(function(res) {
 			return "data:image/png;base64," + res.data.image;
 		});
 	}
@@ -75,24 +75,15 @@ angular.module('catalogservice', ['LocalStorageModule'])
 				actionId = op.id;
 			}
 		});
-		var req1 = {
-			method: 'GET',
-			url: CATALOG_SERVICE.VM_ACTIONS + vmDetail.id + "/actions/" + actionId + "/requests/template",
-			headers: {
-			   'Authorization': 'Bearer ' + token
-			}
-		}
-		$http(req1).then(function(res){
+		
+		var url = CATALOG_SERVICE.VM_ACTIONS + vmDetail.id + "/actions/" + actionId + "/requests/template";
+		
+		$http.get(url).then(function(res){
 			console.log(res);
-			var req2 = {
-				method: 'POST',
-				url: CATALOG_SERVICE.VM_ACTIONS + vmDetail.id + "/actions/" + actionId + "/requests",
-				headers: {
-					'Authorization': 'Bearer ' + token
-				},
-				data: res.data
-			};
-			$http(req2).then(function(res){
+			
+			var	url2 = CATALOG_SERVICE.VM_ACTIONS + vmDetail.id + "/actions/" + actionId + "/requests";
+			
+			$http.post(url2, res.data).then(function(res){
 				console.log("powerOff success!")
 				console.log(res);
 			});
@@ -100,66 +91,37 @@ angular.module('catalogservice', ['LocalStorageModule'])
 	}
 	
 	catalogService.openConsole = function(vmDetail) {
-		
 		var actionId = null;
 		vmDetail.operations.forEach(function(op) {
 			if(op.type === "EXTENSION" && op.extensionId.indexOf("ConnectViaVmrc") >= 0) {
 				actionId = op.id;
 			}
 		});
-		var req1 = {
-			method: 'GET',
-			url: CATALOG_SERVICE.RESOURCE_VIEWS + vmDetail.id,
-			headers: {
-			   'Authorization': 'Bearer ' + token
-			}
-		}
+		var	url = CATALOG_SERVICE.RESOURCE_VIEWS + vmDetail.id;
 		
-		var reqOp = {
-			method: 'GET',
-			//url: "/catalog-service/api/resourceOperations",
-			//url: "/catalog-service/api/plugins",
-			url: "/catalog-service/api/icons/" + vmDetail.iconId,
-			headers: {
-			   'Authorization': 'Bearer ' + token
-			}
-		}
-		
-		$http(reqOp).then(function(res) {
-			console.log(res);
-		});
-		
-		/*
-		$http(req1).then(function(res){
+		$http.get(url).then(function(res){
 			console.log(res);
 			res.data.links.forEach(function(link) {
 				if(link.rel.indexOf("ConnectViaVmrc") >= 0 && link.rel.indexOf("GET Template") >= 0) {
 					console.log("hatos: " + link.href);
 					console.log("action link:" + CATALOG_SERVICE.VM_ACTIONS + vmDetail.id + "/actions/" + actionId + "/requests");
-					var req2 = {
-						method: 'GET',
-						url: link.href,
-						headers: {
-							'Authorization': 'Bearer ' + token
-						}
-					};
-					$http(req2).then(function(res){
+					$http.get(link.href).then(function(res){
 						console.log(res);
 					});
 				}
 			});
-		});*/
+		});
 	}
 
 	
 	catalogService.requestItem = function(catalogItemId, description, reason, deployments) {
 		var	url = CATALOG_SERVICE.LIST_CATALOG_ITEM_VIEWS + catalogItemId;
-		console.log("requestItem:" + catalogItemId);
+		console.log("requestItem:" + catalogItemId + "," + description + "," + reason + "," + deployments);
 		$http.get(url).then(function(res) {
 			console.log(res);
 			var templateLink = res.data.links[0];
 			var requestLink = res.data.links[1];
-			if(res.data.links[1].rel.indexOf("Request Template") > -1) {
+			if(res.data.links[1].rel.indexOf("Request Template") >= 0) {
 				templateLink = res.data.links[1];
 				requestLink = res.data.links[0];
 			}
@@ -174,7 +136,7 @@ angular.module('catalogservice', ['LocalStorageModule'])
 				reqData.data._number_of_instances = deployments;
 				
 				var requestItemUrl = requestLink.href;
-				$http.post(requestItemUrl).then(function(res){
+				$http.post(requestItemUrl, reqData).then(function(res){
 					console.log("request response:");
 					console.log(res);
 				});

@@ -67,7 +67,7 @@ angular.module('myApp', ['ui.router', 'ui.bootstrap', 'catalogservice', 'LocalSt
 		console.log("$scope.des:" + $scope.description);
 		console.log("$scope.reason:" + $scope.reason);
 		console.log("$scope.deployments:" + $scope.deployments);
-		CatalogService.requestItem($scope.item.catalogItem.id);
+		CatalogService.requestItem($scope.item.catalogItem.id, $scope.description, $scope.reason, $scope.deployments);
 		$uibModalInstance.close($scope.item);
 	};
 	$scope.cancel = function() {
